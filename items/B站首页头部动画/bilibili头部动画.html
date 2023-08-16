@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>bilibili头部动画</title>
+    <style>
+      /* 默认样式模版 */
+      :root {
+        --background-color: #2c3e50;
+        --border-color: #7591ad;
+        --text-color: #34495e;
+        --color1: #ec3e27;
+        --color2: #fd79a8;
+        --color3: #0984e3;
+        --color4: #00b894;
+        --color5: #fdcb6e;
+        --color6: #e056fd;
+        --color7: #f97f51;
+        --color8: #bdc581;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+      }
+
+      html {
+        font-size: 14px;
+      }
+
+      body {
+        width: 100vw;
+        height: 100vh;
+        background-color: var(--background-color);
+        font-family: 'Montserrat', sans-serif, Arial, 'Microsoft Yahei';
+      }
+
+      .channel {
+        position: absolute;
+        width: 80%;
+        text-align: center;
+        bottom: 0%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        font-size: 20px;
+        font-weight: bold;
+        color: #fff;
+      }
+
+      .banner {
+        position: relative;
+        width: 100vw;
+        height: 155px;
+        overflow: hidden;
+        background-color: #00b894;
+      }
+
+      .image {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="banner">
+      <div class="image">
+        <img width="3600" height="250" src="./images/bg.png" />
+      </div>
+      <div class="image">
+        <img width="1800" height="165" src="./images/girl1.png" />
+      </div>
+      <div class="image">
+        <img width="3000" height="250" src="./images/grassland.png" />
+      </div>
+      <div class="image">
+        <img width="1800" height="160" src="./images/mushroom.png" />
+      </div>
+      <div class="image">
+        <img width="1800" height="165" src="./images/spirit.png" />
+      </div>
+      <div class="image">
+        <img width="1950" height="179" src="./images/leaf.png" />
+      </div>
+    </div>
+    <script>
+      let x = 0
+
+      let x_new = 0
+
+      let x_offset = 0
+
+      let banner = document.querySelector('.banner')
+      
+      let images = document.querySelectorAll('.image')
+
+      let window_width = document.documentElement.clientWidth
+
+      // 计算每变化1模糊度所需要移动的距离：鼠标移动1/2屏幕宽度模糊度发生5px变化
+      let step = window_width / 2 / 5
+
+      let data_images = [
+        { x: 0, b: 4 },
+        { x: 0, b: 0 },
+        { x: 0, b: 1 },
+        { x: 0, b: 4 },
+        { x: 0, b: 5 },
+        { x: 0, b: 6 }
+      ]
+
+      let init = (images) => {
+        for (const key in images) {
+          if (images.hasOwnProperty(key)) {
+            const element = images[key]
+            const element_data = data_images[key]
+            element.children[0].style = 'transition: .2s linear; transform: translate(' + element_data.x + 'px); filter: blur(' + element_data.b + 'px);'
+          }
+        }
+      }
+
+      window.onload = () => {
+        init()
+      }
+
+      banner.addEventListener('mouseover', (e) => {
+        x = e.clientX
+      })
+
+      banner.addEventListener('mousemove', (e) => {
+        x_new = e.clientX
+        x_offset = x - x_new
+        for (const key in images) {
+          if (images.hasOwnProperty(key)) {
+            let level = (6 - parseInt(key)) * 10
+            const element = images[key]
+            const element_data = data_images[key]
+            let b_new = Math.abs(element_data.b + x_offset / step)
+            let l_new = 0 - x_offset / level
+            element.children[0].style = 'transition: .2s linear; transform: translate(' + l_new + 'px); filter: blur(' + b_new + 'px);'
+          }
+        }
+      })
+
+      let blink_index = 0
+      let timeout = 4000
+      let blink = () => {
+        if (blink_index == 4) {
+          blink_index = 1
+          timeout = 4000
+        } else {
+          blink_index += 1
+          timeout = 30
+        }
+        images[1].children[0].src = './images/girl' + blink_index + '.png'
+        setTimeout(() => {
+          blink()
+        }, timeout)
+      }
+
+      banner.addEventListener('mouseout', (e) => {
+        init()
+        blink()
+      })
+    </script>
+  </body>
+</html>
