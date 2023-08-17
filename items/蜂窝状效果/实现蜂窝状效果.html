@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Honeycomb effect</title>
+    <style>
+      body {
+        background: black;
+      }
+
+      .content {
+        width: 1400px;
+        height: 720px;
+        overflow: hidden;
+        background: -webkit-radial-gradient(#219be2, black, black);
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+      }
+
+      .polygon {
+        float: left;
+        width: 33px;
+        height: 30px;
+        background-color: #323234;
+        clip-path: polygon(25% 5%, 75% 5%, 100% 50%, 75% 95%, 25% 95%, 0% 50%);
+      }
+
+      .odd {
+        float: left;
+        position: relative;
+        top: -17px;
+        left: -11px;
+        margin-left: -10px;
+      }
+
+      .even {
+        position: relative;
+        left: -16px;
+        top: -2px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="content"></div>
+
+    <script>
+      let content = document.querySelector('.content')
+      let arr = []
+      let x = 0
+      for (let i = 0; i < 1289; i++) {
+        arr.push(`<div class='polygon ${i % 2 ? 'even' : 'odd'}'></div>`)
+      }
+      content.innerHTML = arr.join('')
+    </script>
+  </body>
+</html>
