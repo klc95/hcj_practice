@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        width: 100vw;
+        height: 100vh;
+        background-color: #fff;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+      }
+
+      h1 {
+        position: relative;
+        color: blueviolet;
+        font-size: 28px;
+      }
+
+      h1::before {
+        position: absolute;
+        color: transparent;
+        /* 中文转成Unicode后除去\后面的u */
+        content: '\4e3b\8981\7684\76ee\6807\662f\a\a';
+        background-image: linear-gradient(to right, #bed742, #f8aba6, #585eaa, #ed1941, #7fb80e, #f26522, #ffc20e, #7c8577, #009ad6, #65c294, #f47920, #f15b6c, #2e3a1f);
+        /* 规定背景的绘制区域；简而言之，background-clip就是规定background-color/background-image背景（色/图）在盒模型里的作用范围 */
+        background-clip: text;
+        -webkit-background-clip: text;
+        /* 矩形遮罩 */
+        clip-path: polygon(-20% 0%, 0% 0%, -10% 100%, -30% 100%);
+        animation: light 2s 2s infinite;
+      }
+
+      @keyframes light {
+        0% {
+          clip-path: polygon(-20% 0%, 0% 0%, -10% 100%, -30% 100%);
+        }
+        50% {
+          clip-path: polygon(100% 0%, 120% 0%, 110% 100%, 90% 100%);
+        }
+        100% {
+          clip-path: polygon(-20% 0%, 0% 0%, -10% 100%, -30% 100%);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <h1>主要的目标是</h1>
+  </body>
+</html>
